@@ -2,7 +2,7 @@
   Appointment Web Site<br/>
 </h2>
 <div align="center">
-  <img alt="Demo" src="./Images/readme-img1.png" />
+  <img alt="Demo" src="Appointment/Appointment/wwwroot/Login_v3/images/Ekran Görüntüsü (9).png" />
 </div>
 
 <br/>
