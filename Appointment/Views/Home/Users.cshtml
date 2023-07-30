@@ -1,0 +1,39 @@
+﻿@using EntityLayer.Concrete
+@model List<User>
+@{
+    ViewData["Title"] = "Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id ="PlaceHolderHere" ></div>
+<button class="btn btn-sm btn-primary mt-2" data-toggle="ajax-model" data-target="#addUser" data-url="@Url.Action("Create")" >Kullanıc Ekle</button>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Kullanıcı İsmi</th>
+            <th scope="col">Email</th>
+            <th scope="col">Şifre</th>
+            <th scope="col">Durum</th>
+            <th scope="col">Düzenle</th>
+            <th scope="col">Sil</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model){
+        <tr>
+            <th scope="row">@item.Id</th>
+            <td>@item.Name @item.LastName</td>
+            <td>@item.Email</td>
+            <td>@item.Password</td>
+            <td>@item.Status</td>
+                <td>
+                    <button class="btn btn-sm btn-primary mt-2" data-toggle="ajax-model" data-target="#addUser" data-url="@Url.Action($"Edit/{item.Id}")">Düzenle</button>
+                </td>
+                <td><button class="btn btn-sm btn-primary mt-2" data-toggle="ajax-model" data-target="#addUser" data-url="@Url.Action($"DeleteUser/{item.Id}")">Sil</button></td>
+        </tr>
+        }
+    </tbody>
+</table>
+

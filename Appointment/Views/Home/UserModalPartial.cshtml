@@ -1,0 +1,77 @@
+﻿@using EntityLayer.Concrete
+
+@model User
+
+<div class="modal fade" id="addUser">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header" >
+                <h4 class="modal-title" id ="addUserLabel" >Kullanıcı Ekle</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>X</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="Create" >
+                    <div class="form-group" >
+                        <label asp-for="Name" ></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName"></label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-check-input" asp-for="Status" type="checkbox" id="flexCheckChecked">
+                        <label class="form-check-label" asp-for="Status" for="flexCheckChecked">
+                            Kullanıcı Durumu
+                        </label>
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UserTypeId"></label>
+                        <input asp-for="UserTypeId" class="form-control" />
+                        <span asp-validation-for="UserTypeId" class="text-danger"></span>
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="modal-footer" >
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-primary" data-save="modal">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // This code will be executed when the document is ready
+    $(document).ready(function () {
+        // Handle the click event of the "Kapat" button
+        $('.modal-footer button[data-dismiss="modal"]').click(function () {
+            // Close the modal dialog
+            $('#addUser').modal('hide');
+        });
+    });
+    // This code will be executed when the document is ready
+    $(document).ready(function () {
+        // Handle the click event of the close button ("X" button) in the modal header
+        $('.modal-header button.close').click(function () {
+            // Close the modal dialog
+            $('#addUser').modal('hide');
+        });
+    });
+</script>

@@ -1,0 +1,119 @@
+﻿@using EntityLayer.Concrete
+@model List<Appointment>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<button class="btn btn-sm btn-primary mt-2" id="btnAddMeeting">Toplantı Ekle</button>
+<div class="ag-format-container">
+    <div class="ag-courses_box">
+        @foreach (var item in Model)
+        {
+        <div class="ag-courses_item">
+            <a href="/Home/Privacy/@item.AppointmentId"   class="ag-courses-item_link">
+                <div class="ag-courses-item_bg"></div>
+
+                <div class="ag-courses-item_title">
+                   @item.Description
+                </div>
+                <div class="ag-courses-item_date-box">
+                    Tarih:
+                    <span class="ag-courses-item_date">
+                        @(((DateTime)item.AppointmentDate).ToString("dd-MMM-yyy"))
+                    </span>
+                </div>
+                <div class="ag-courses-item_date-box">
+                    Saat:
+                    <span class="ag-courses-item_date">
+                        @item.AppointmentTime
+                    </span>
+                </div>
+            </a>
+                <button  type="submit" class="btn btn-primary w-100 delete-meeting"  data-meeting-id="@item.AppointmentId">Sil</button>
+        </div>
+        }
+    </div>
+</div>
+<div class="modal fade" id ="MeetingModel" >
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="text-info  modal-title">Toplantı Ekle</h1>
+                <button class=" btn-close text-danger" data-dismiss="modal"  id ="close_btn"></button>
+            </div>
+            <div class="modal-body" >
+                <form>
+                    <div class="form-group">
+                        <label>Toplantı Konusu</label>
+                        <input type="text" class="form-control"   id ="description" placeholder="Lütfen Toplantı Tanımınızı Giriniz" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label>Toplantı Tarihi</label>
+                        <input type="date" class="form-control" id="dateInput" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Toplantı Saati</label>
+                        <input type="time" class="form-control" id="clockInput" aria-describedby="emailHelp" required>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!-- Adjust the column width as needed -->
+                            <button type="submit" class="btn btn-primary w-100"  id="AddMeeting">Kaydet</button>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Adjust the column width as needed -->
+                            <button type="submit" class="btn btn-danger w-100" id="close_btn1">Kapat</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $("#AddMeeting").click(function(){
+            let appointment ={
+                AppointmentDate: $("#dateInput").val(),
+                AppointmentTime: $("#clockInput").val(),
+                Description: $("#description").val()
+            };
+            $.ajax({
+                type:"post",
+                url: "/Home/AddAppointment/",
+                data: appointment,
+                success:function(func){
+                    let result=jQuery.parseJSON(func);
+                    $('#MeetingModel').modal('hide');
+                    alert("Toplantı Eklendi...");
+                    window.location.reload();
+                }
+            });
+        });
+        $(document).ready(function () {
+            $('.delete-meeting').click(function () {
+                let id = $(this).data('meeting-id');
+                $.ajax({
+                    url: "/Home/DeleteAppointment/" + id,
+                    type: "post",
+                    dataType: "json",
+                    success: function (data) {
+                        window.location.reload();
+                        alert("Toplantı Silindi...");
+                    },
+                    error: function (error) {
+                        console.error("Error deleting the meeting:", error);
+                    }
+                });
+            });
+        });
+
+    </script>
+}
+
